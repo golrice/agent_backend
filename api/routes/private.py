@@ -26,7 +26,7 @@ def create_user(user_in: PrivateUserCreate, session: SessionDep) -> Any:
 
     user = User(
         email=user_in.email,
-        full_name=user_in.full_name,
+        username=user_in.full_name,
         hashed_password=get_password_hash(user_in.password),
     )
 
