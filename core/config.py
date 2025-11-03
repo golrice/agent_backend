@@ -7,7 +7,7 @@ from pydantic import (
     BeforeValidator,
     EmailStr,
     HttpUrl,
-    MySQLDsn,
+    PostgresDsn,
     computed_field,
     model_validator,
 )
@@ -59,15 +59,21 @@ class Settings(BaseSettings):
 
     @computed_field  # type: ignore[prop-decorator]
     @property
-    def SQLALCHEMY_DATABASE_URI(self) -> MySQLDsn:
-        return MySQLDsn.build(
-            scheme="mysql+mysqlconnector",
+    def SQLALCHEMY_DATABASE_URI(self) -> PostgresDsn:
+        return PostgresDsn.build(
+            scheme="postgresql+psycopg",
             username=self.DATABASE_USER,
             password=self.DATABASE_PASSWORD,
             host=self.DATABASE_SERVER,
             port=self.DATABASE_PORT,
             path=self.DATABASE_DB,
         )
+
+    @property
+    def DATABASE_URI(self) -> str:
+        if self.DATABASE_PASSWORD:
+            return f"postgresql://{self.DATABASE_USER}:{self.DATABASE_PASSWORD}@{self.DATABASE_SERVER}:{self.DATABASE_PORT}/{self.DATABASE_DB}"
+        return f"postgresql://{self.DATABASE_USER}@{self.DATABASE_SERVER}:{self.DATABASE_PORT}/{self.DATABASE_DB}"
 
     SMTP_TLS: bool = True
     SMTP_SSL: bool = False
@@ -115,6 +121,10 @@ class Settings(BaseSettings):
         )
 
         return self
+
+    AI_BASE_URL: str
+    AI_MODEL: str
+    AI_API_KEY: str
 
 
 settings = Settings()  # type: ignore

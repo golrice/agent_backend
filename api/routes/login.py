@@ -1,3 +1,3 @@
-from mod.login.handlers import handler
+from mod.login.interface import handler
 
 router = handler.router

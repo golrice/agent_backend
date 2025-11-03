@@ -5,11 +5,17 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.11, <3.14"
 dependencies = [
+    "asyncio>=4.0.0",
     "bcrypt==4.3.0",
     "emails>=0.6",
     "fastapi[standard]>=0.119.1",
+    "langchain>=1.0.3",
+    "langchain-openai>=1.0.1",
+    "langgraph-checkpoint-postgres>=3.0.0",
     "mysql-connector-python>=9.4.0",
+    "openai>=2.6.1",
     "passlib[bcrypt]>=1.7.4",
+    "psycopg[binary]>=3.2.12",
     "pydantic-settings[dotenv]>=2.11.0",
     "pyjwt>=2.10.1",
     "sqlmodel>=0.0.27",
